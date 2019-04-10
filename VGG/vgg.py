@@ -45,7 +45,7 @@ def make_layers(cfg, batch_norm=False):
             else:
                 layers += [conv2d, nn.ReLU(inplace=True)]
             in_channels = v
-    return nn.Sequential(layers)
+    return nn.Sequential(*layers)
 
 # generate models:
 
