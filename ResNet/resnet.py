@@ -93,7 +93,7 @@ class ResNet(nn.Module):
         for stride in strides:
             layers.append(block(self.in_channels, out_channels, stride))
             self.in_channels = out_channels * block.expansion
-        return nn.Sequential(layers)
+        return nn.Sequential(*layers)
 
     def forward(self, x):
         output = self.conv1(x)

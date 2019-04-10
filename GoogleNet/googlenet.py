@@ -93,13 +93,11 @@ class GoogleNet(nn.Module):
         # 7 x 7 x 832
         self.b5 = Inception(832, 384, 192, 384, 48, 128, 128)
         # 7 x 7 x 1024
-        self.avgpool = nn.AvgPool2d(kernel_size=7, stride=1)
+        self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
         # 1 x 1 x 1024
         self.droupout = nn.Dropout2d(0.4)
         # 1 x 1 x 1024
         self.fc = nn.Linear(1024, num_classes)
-        # 1 x 1 x 1000
-        self.sf = nn.Softmax()
         # 1 x 1 x 1000
 
     def forward(self, x):
@@ -124,9 +122,8 @@ class GoogleNet(nn.Module):
         output = self.avgpool(output)
 
         output = self.droupout(output)
-        output = output.view(output.size()[0], -1)
+        output = output.view(output.size(0), -1)
         output = self.fc(output)
-        output = self.sf(output)
 
         return output
 
